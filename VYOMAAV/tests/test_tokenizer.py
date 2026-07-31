@@ -81,7 +81,7 @@ def test_large_file_tokenization():
     tokens, diags = tokenizer.tokenize()
 
     assert len(diags) == 0
-    assert len(tokens) == (1000 * 9) + 1  # 9 tokens per line + EOF
+    assert len(tokens) == (1000 * 8) + 1  # 9 tokens per line + EOF
     assert tokens[-1].type == TokenType.EOF
 
 

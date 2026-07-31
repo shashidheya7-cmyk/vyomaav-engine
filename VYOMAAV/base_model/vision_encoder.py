@@ -99,7 +99,7 @@ class VYOMAAVVisionEncoder(IVisionEncoder):
         N_p = H_p * W_p  # Patches per frame
 
         tokens = patches.flatten(2).transpose(1, 2)  # (B*T, N_p, D)
-        tokens = tokens.view(B, T * N_p, self.embed_dim)  # Combine time & space: (B, T*N_p, D)
+        tokens = tokens.reshape(B, T * N_p, self.embed_dim)  # Combine time & space: (B, T*N_p, D)
 
         # Generate synthetic grid coordinates (x, y, t) for 3D-RoPE
         grid_y, grid_x = torch.meshgrid(
