@@ -1,0 +1,23 @@
+# Python & Pytest
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+
+# PyTorch Checkpoints & Large Data
+*.pt
+*.pth
+*.bin
+*.safetensors
+
+# Engine & Build Artifacts
+vgc_output/
+tmp_test/
+tmp_ros2_test/
+build/
+dist/
+
+# IDE & OS
+.vscode/
+.DS_Store
