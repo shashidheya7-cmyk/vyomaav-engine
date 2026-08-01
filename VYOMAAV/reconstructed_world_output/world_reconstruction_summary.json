@@ -1,0 +1,11 @@
+{
+  "scene_id": "LiveDemoWorld",
+  "status": "3d_world_generated",
+  "active_entity_id": "dino_table_0",
+  "perception_nodes_count": 2,
+  "camera_status": "calibrated",
+  "fusion_backend": "weighted_poisson_blend",
+  "is_physics_ready": true,
+  "is_photorealistic": true,
+  "navmesh_status": "generated"
+}
