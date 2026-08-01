@@ -23,6 +23,7 @@ from reconstruction.gaussian import GaussianSplatEngine
 from reconstruction.sdf import NeuralSDFEngine
 from reconstruction.materials import PBRMaterialGenerator
 from reconstruction.completion import WorldCompletionEngine
+from reconstruction.exporter import MeshExporter
 from runtime.interactive_world import InteractiveWorldManager
 
 
@@ -126,6 +127,14 @@ class WorldReconstructionPipeline:
         world_mgr = InteractiveWorldManager(scene)
         navmesh = world_mgr.generate_navmesh_nodes()
 
+        # 8. Export Physical 3D Assets on Disk
+        obj_path = None
+        ply_path = None
+        if output_dir:
+            os.makedirs(output_dir, exist_ok=True)
+            obj_path = MeshExporter.export_to_obj(fused_mesh["vertices"], fused_mesh["faces"], os.path.join(output_dir, "fused_mesh.obj"))
+            ply_path = MeshExporter.export_gaussians_to_ply(splat_res["positions"], os.path.join(output_dir, "gaussians.ply"))
+
         pipeline_summary = {
             "scene_id": scene_id,
             "status": "3d_world_generated",
@@ -135,11 +144,12 @@ class WorldReconstructionPipeline:
             "fusion_backend": fused_mesh["fusion_type"],
             "is_physics_ready": sdf_res["physics_ready"],
             "is_photorealistic": splat_res["status"] == "splat_initialized",
-            "navmesh_status": navmesh["navmesh_status"]
+            "navmesh_status": navmesh["navmesh_status"],
+            "exported_obj_mesh": obj_path,
+            "exported_ply_gaussians": ply_path
         }
 
         if output_dir:
-            os.makedirs(output_dir, exist_ok=True)
             summary_path = os.path.join(output_dir, "world_reconstruction_summary.json")
             with open(summary_path, "w") as f:
                 json.dump(pipeline_summary, f, indent=2)

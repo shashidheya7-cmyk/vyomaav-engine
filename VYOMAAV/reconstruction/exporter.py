@@ -1,36 +1,40 @@
-"""VYOMAAV Reconstruction Exporter: Exports Mesh Geometry to Wavefront OBJ / PLY."""
+"""VYOMAAV Asset Exporter: Writes reconstructed 3D meshes (.obj), Gaussian splats (.ply), and scene graphs."""
 
 import os
-from typing import Dict, Any
+import json
+import numpy as np
+from typing import Dict, Any, Optional
 
 class MeshExporter:
-    """Exports reconstructed 3D mesh arrays to OBJ and PLY formats."""
+    """Exports fused geometry to standard Wavefront .OBJ and 3D Gaussian .PLY files."""
 
     @staticmethod
-    def export_to_obj(mesh_data: Dict[str, Any], file_path: str) -> str:
-        """Writes vertices, normals, UVs, and face indices to a standard .obj file."""
-        os.makedirs(os.path.dirname(os.path.abspath(file_path)), exist_ok=True)
+    def export_to_obj(vertices: list, faces: list, output_filepath: str) -> str:
+        """Writes vertex coordinates and triangle faces to a Wavefront .OBJ file."""
+        os.makedirs(os.path.dirname(output_filepath), exist_ok=True)
 
-        vertices = mesh_data.get("vertices", [])
-        normals = mesh_data.get("normals", [])
-        uvs = mesh_data.get("uvs", [])
-        faces = mesh_data.get("faces", [])
-
-        with open(file_path, "w") as f:
-            f.write("# VYOMAAV Wavefront OBJ Exporter\n")
-            f.write(f"# Backend: {mesh_data.get('backend', 'TRELLIS')}\n\n")
-
+        with open(output_filepath, "w") as f:
+            f.write("# VYOMAAV Engine Reconstructed 3D Mesh\n")
             for v in vertices:
                 f.write(f"v {v[0]:.6f} {v[1]:.6f} {v[2]:.6f}\n")
-
-            for vn in normals:
-                f.write(f"vn {vn[0]:.6f} {vn[1]:.6f} {vn[2]:.6f}\n")
-
-            for vt in uvs:
-                f.write(f"vt {vt[0]:.6f} {vt[1]:.6f}\n")
-
             for face in faces:
-                f1, f2, f3 = face[0] + 1, face[1] + 1, face[2] + 1
-                f.write(f"f {f1}/{f1}/{f1} {f2}/{f2}/{f2} {f3}/{f3}/{f3}\n")
+                # 1-based indexing for OBJ format
+                f.write(f"f {face[0]+1} {face[1]+1} {face[2]+1}\n")
 
-        return file_path
+        return output_filepath
+
+    @staticmethod
+    def export_gaussians_to_ply(positions: list, output_filepath: str) -> str:
+        """Writes 3D Gaussian splat point positions to a PLY file for point-cloud/splat viewers."""
+        os.makedirs(os.path.dirname(output_filepath), exist_ok=True)
+        pts = np.array(positions, dtype=np.float32)
+
+        with open(output_filepath, "w") as f:
+            f.write("ply\nformat ascii 1.0\n")
+            f.write(f"element vertex {len(pts)}\n")
+            f.write("property float x\nproperty float y\nproperty float z\n")
+            f.write("end_header\n")
+            for pt in pts:
+                f.write(f"{pt[0]:.6f} {pt[1]:.6f} {pt[2]:.6f}\n")
+
+        return output_filepath

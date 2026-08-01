@@ -1,0 +1,13 @@
+{
+  "scene_id": "RealWorldChairScene",
+  "status": "3d_world_generated",
+  "active_entity_id": "dino_chair_0",
+  "perception_nodes_count": 2,
+  "camera_status": "calibrated",
+  "fusion_backend": "weighted_poisson_blend",
+  "is_physics_ready": true,
+  "is_photorealistic": true,
+  "navmesh_status": "generated",
+  "exported_obj_mesh": "./real_world_output/fused_mesh.obj",
+  "exported_ply_gaussians": "./real_world_output/gaussians.ply"
+}
