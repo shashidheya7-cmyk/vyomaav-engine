@@ -1,13 +1,299 @@
 {
-  "scene_id": "RealWorldChairScene",
-  "status": "3d_world_generated",
-  "active_entity_id": "dino_chair_0",
-  "perception_nodes_count": 2,
-  "camera_status": "calibrated",
-  "fusion_backend": "weighted_poisson_blend",
-  "is_physics_ready": true,
-  "is_photorealistic": true,
-  "navmesh_status": "generated",
-  "exported_obj_mesh": "./real_world_output/fused_mesh.obj",
-  "exported_ply_gaussians": "./real_world_output/gaussians.ply"
+  "metadata": {
+    "scene_id": "RealWorldChairScene",
+    "status": "world_reconstruction_complete",
+    "global_coordinate_frame": "camera_relative_floor_aligned",
+    "total_entities": 17
+  },
+  "nodes": {
+    "lamp_0": {
+      "entity_id": "lamp_0",
+      "label": "lamp",
+      "spatial_box": {
+        "position_xyz": [
+          -0.36314383149147034,
+          -0.013962147757411003,
+          1.8464940786361694
+        ],
+        "scale_extents": [
+          0.37545379996299744,
+          1.1344245672225952,
+          1.6032967567443848
+        ]
+      },
+      "status": "mesh_reconstructed"
+    },
+    "floor_1": {
+      "entity_id": "floor_1",
+      "label": "floor",
+      "spatial_box": {
+        "position_xyz": [
+          0.22056350111961365,
+          -2.5543320178985596,
+          6.965163230895996
+        ],
+        "scale_extents": [
+          6.477602005004883,
+          1.8038324117660522,
+          7.8944878578186035
+        ]
+      },
+      "status": "mesh_reconstructed"
+    },
+    "furniture_2": {
+      "entity_id": "furniture_2",
+      "label": "furniture",
+      "spatial_box": {
+        "position_xyz": [
+          -0.010272098705172539,
+          -0.4922451674938202,
+          3.081629514694214
+        ],
+        "scale_extents": [
+          0.9244888424873352,
+          1.0136172771453857,
+          2.6827425956726074
+        ]
+      },
+      "status": "mesh_reconstructed"
+    },
+    "table_3": {
+      "entity_id": "table_3",
+      "label": "table",
+      "spatial_box": {
+        "position_xyz": [
+          0.3398672342300415,
+          -0.3261776566505432,
+          1.845432996749878
+        ],
+        "scale_extents": [
+          0.20000000298023224,
+          0.3628072440624237,
+          1.047483205795288
+        ]
+      },
+      "status": "mesh_reconstructed"
+    },
+    "wall art_4": {
+      "entity_id": "wall art_4",
+      "label": "wall art",
+      "spatial_box": {
+        "position_xyz": [
+          0.08218014240264893,
+          0.31177133321762085,
+          1.7002787590026855
+        ],
+        "scale_extents": [
+          0.3287205696105957,
+          0.5046195983886719,
+          0.20000000298023224
+        ]
+      },
+      "status": "mesh_reconstructed"
+    },
+    "furniture_5": {
+      "entity_id": "furniture_5",
+      "label": "furniture",
+      "spatial_box": {
+        "position_xyz": [
+          0.678763747215271,
+          -0.2834576964378357,
+          1.7745457887649536
+        ],
+        "scale_extents": [
+          0.4051879644393921,
+          0.3287438452243805,
+          0.9159907102584839
+        ]
+      },
+      "status": "mesh_reconstructed"
+    },
+    "chair_6": {
+      "entity_id": "chair_6",
+      "label": "chair",
+      "spatial_box": {
+        "position_xyz": [
+          -0.0077149225398898125,
+          -0.4929383397102356,
+          3.0859689712524414
+        ],
+        "scale_extents": [
+          0.920647382736206,
+          1.0150445699691772,
+          2.6838011741638184
+        ]
+      },
+      "status": "mesh_reconstructed"
+    },
+    "object_7": {
+      "entity_id": "object_7",
+      "label": "object",
+      "spatial_box": {
+        "position_xyz": [
+          0.5270182490348816,
+          -0.6560077667236328,
+          2.6797537803649902
+        ],
+        "scale_extents": [
+          0.20000000298023224,
+          0.20000000298023224,
+          0.8818401098251343
+        ]
+      },
+      "status": "mesh_reconstructed"
+    },
+    "appliance_8": {
+      "entity_id": "appliance_8",
+      "label": "appliance",
+      "spatial_box": {
+        "position_xyz": [
+          0.5270182490348816,
+          -0.6560077667236328,
+          2.6797537803649902
+        ],
+        "scale_extents": [
+          0.20000000298023224,
+          0.20000000298023224,
+          0.8818401098251343
+        ]
+      },
+      "status": "mesh_reconstructed"
+    },
+    "decor_9": {
+      "entity_id": "decor_9",
+      "label": "decor",
+      "spatial_box": {
+        "position_xyz": [
+          0.08218014240264893,
+          0.31177133321762085,
+          1.7002787590026855
+        ],
+        "scale_extents": [
+          0.3287205696105957,
+          0.5046195983886719,
+          0.20000000298023224
+        ]
+      },
+      "status": "mesh_reconstructed"
+    },
+    "appliance_10": {
+      "entity_id": "appliance_10",
+      "label": "appliance",
+      "spatial_box": {
+        "position_xyz": [
+          0.678763747215271,
+          -0.2834576964378357,
+          1.7745457887649536
+        ],
+        "scale_extents": [
+          0.4051879644393921,
+          0.3287438452243805,
+          0.9159907102584839
+        ]
+      },
+      "status": "mesh_reconstructed"
+    },
+    "appliance_11": {
+      "entity_id": "appliance_11",
+      "label": "appliance",
+      "spatial_box": {
+        "position_xyz": [
+          0.08217113465070724,
+          0.3133440613746643,
+          1.7000924348831177
+        ],
+        "scale_extents": [
+          0.328684538602829,
+          0.5077781081199646,
+          0.20000000298023224
+        ]
+      },
+      "status": "mesh_reconstructed"
+    },
+    "applian_12": {
+      "entity_id": "applian_12",
+      "label": "applian",
+      "spatial_box": {
+        "position_xyz": [
+          2.8505401611328125,
+          -3.0118753910064697,
+          7.55109977722168
+        ],
+        "scale_extents": [
+          1.7996788024902344,
+          1.3275090456008911,
+          5.265295028686523
+        ]
+      },
+      "status": "mesh_reconstructed"
+    },
+    "appce_13": {
+      "entity_id": "appce_13",
+      "label": "appce",
+      "spatial_box": {
+        "position_xyz": [
+          0.5146462321281433,
+          0.13081477582454681,
+          1.1630423069000244
+        ],
+        "scale_extents": [
+          0.20000000298023224,
+          0.23744530975818634,
+          0.20000000298023224
+        ]
+      },
+      "status": "mesh_reconstructed"
+    },
+    "decor_14": {
+      "entity_id": "decor_14",
+      "label": "decor",
+      "spatial_box": {
+        "position_xyz": [
+          0.3444584310054779,
+          0.06296245008707047,
+          1.7080583572387695
+        ],
+        "scale_extents": [
+          0.20000000298023224,
+          0.42620736360549927,
+          0.5080149173736572
+        ]
+      },
+      "status": "mesh_reconstructed"
+    },
+    "furniture_15": {
+      "entity_id": "furniture_15",
+      "label": "furniture",
+      "spatial_box": {
+        "position_xyz": [
+          0.44695332646369934,
+          -0.022137178108096123,
+          1.1710567474365234
+        ],
+        "scale_extents": [
+          0.2693430483341217,
+          0.5512157678604126,
+          0.8463060855865479
+        ]
+      },
+      "status": "mesh_reconstructed"
+    },
+    "furniture_16": {
+      "entity_id": "furniture_16",
+      "label": "furniture",
+      "spatial_box": {
+        "position_xyz": [
+          0.17366236448287964,
+          0.001655214698985219,
+          1.7512171268463135
+        ],
+        "scale_extents": [
+          1.3922176361083984,
+          1.1454085111618042,
+          2.530533790588379
+        ]
+      },
+      "status": "mesh_reconstructed"
+    }
+  }
 }
