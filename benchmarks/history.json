@@ -1,0 +1,149 @@
+[
+  {
+    "timestamp": "2026-08-02T06:23:23.305889",
+    "git_commit": "8b305e1",
+    "experiment": "12_view_orbit_angle_tsdf_trellis",
+    "metrics": {
+      "abs_rel_error": 0.01990571804344654,
+      "rmse": 0.03801494091749191,
+      "chamfer_distance": 0.03132766704134955,
+      "hausdorff_distance": 0.30239272601519157,
+      "f_score": 0.7564307633616122,
+      "normal_consistency": 0.9869567453225946,
+      "volumetric_iou": 0.5632349942220107
+    },
+    "performance": {
+      "total_latency_sec": 4.6083,
+      "cpu_ram_rss_mb": 1525.26,
+      "stages": {
+        "1_Camera_Trajectory_Generation": {
+          "duration_sec": 0.0009,
+          "percentage": 0.02,
+          "peak_vram_mb": 0.0
+        },
+        "2_Angle_Weighted_TSDF_Integration": {
+          "duration_sec": 1.8831,
+          "percentage": 40.86,
+          "peak_vram_mb": 745.92
+        },
+        "3_Marching_Cubes_Extraction": {
+          "duration_sec": 0.1169,
+          "percentage": 2.54,
+          "peak_vram_mb": 383.52
+        },
+        "4_TRELLIS_Neural_Completion": {
+          "duration_sec": 0.4552,
+          "percentage": 9.88,
+          "peak_vram_mb": 383.52
+        },
+        "5_Quantitative_Benchmark_Evaluation": {
+          "duration_sec": 2.1522,
+          "percentage": 46.7,
+          "peak_vram_mb": 383.52
+        }
+      }
+    }
+  },
+  {
+    "timestamp": "2026-08-02T06:25:33.175046",
+    "git_commit": "8b305e1",
+    "experiment": "12_view_orbit_angle_tsdf_trellis",
+    "metrics": {
+      "abs_rel_error": 0.019936805590987206,
+      "rmse": 0.03807451203465462,
+      "chamfer_distance": 0.03170863632890116,
+      "hausdorff_distance": 0.3056540641855004,
+      "f_score": 0.7519344205591134,
+      "normal_consistency": 0.9864482412519042,
+      "volumetric_iou": 0.5630500526691359
+    },
+    "performance": {
+      "total_latency_sec": 4.2467,
+      "cpu_ram_rss_mb": 1516.35,
+      "stages": {
+        "1_Camera_Trajectory_Generation": {
+          "duration_sec": 0.001,
+          "percentage": 0.02,
+          "peak_vram_mb": 0.0
+        },
+        "2_Angle_Weighted_TSDF_Integration": {
+          "duration_sec": 1.9426,
+          "percentage": 45.75,
+          "peak_vram_mb": 745.92
+        },
+        "3_Marching_Cubes_Extraction": {
+          "duration_sec": 0.1615,
+          "percentage": 3.8,
+          "peak_vram_mb": 383.52
+        },
+        "4_TRELLIS_Neural_Completion": {
+          "duration_sec": 0.0022,
+          "percentage": 0.05,
+          "peak_vram_mb": 383.52
+        },
+        "5_Quantitative_Benchmark_Evaluation": {
+          "duration_sec": 2.1393,
+          "percentage": 50.38,
+          "peak_vram_mb": 383.52
+        }
+      }
+    }
+  },
+  {
+    "timestamp": "2026-08-02T06:27:27.726448",
+    "git_branch": "phase2-ai-integration",
+    "git_commit": "8b305e1",
+    "experiment": "12_view_orbit_enriched_benchmark",
+    "environment": {
+      "pytorch_version": "2.11.0+cu130",
+      "cuda_version": "13.0",
+      "gpu_model": "NVIDIA RTX PRO 6000 Blackwell Server Edition"
+    },
+    "config": {
+      "num_views": 12,
+      "resolution": "640x480",
+      "depth_model": "DepthAnythingV2",
+      "completion_backend": "TRELLIS_Structural_Wrapper"
+    },
+    "metrics": {
+      "abs_rel_error": 0.019955618306994438,
+      "rmse": 0.03807508572936058,
+      "chamfer_distance": 0.03131649885127804,
+      "hausdorff_distance": 0.2981839911222012,
+      "f_score": 0.7550191669301283,
+      "normal_consistency": 0.9869296275034134,
+      "volumetric_iou": 0.5637853088140318
+    },
+    "performance": {
+      "total_latency_sec": 4.7251,
+      "cpu_ram_rss_mb": 1517.23,
+      "stages": {
+        "1_Camera_Trajectory_Generation": {
+          "duration_sec": 0.0009,
+          "percentage": 0.02,
+          "peak_vram_mb": 0.0
+        },
+        "2_Angle_Weighted_TSDF_Integration": {
+          "duration_sec": 2.1522,
+          "percentage": 45.55,
+          "peak_vram_mb": 745.92
+        },
+        "3_Marching_Cubes_Extraction": {
+          "duration_sec": 0.1919,
+          "percentage": 4.06,
+          "peak_vram_mb": 383.52
+        },
+        "4_TRELLIS_Neural_Completion": {
+          "duration_sec": 0.2462,
+          "percentage": 5.21,
+          "peak_vram_mb": 383.52
+        },
+        "5_Quantitative_Benchmark_Evaluation": {
+          "duration_sec": 2.1339,
+          "percentage": 45.16,
+          "peak_vram_mb": 383.52
+        }
+      }
+    }
+  }
+]
