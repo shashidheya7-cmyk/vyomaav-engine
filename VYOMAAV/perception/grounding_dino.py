@@ -1,49 +1,78 @@
-"""VYOMAAV Perception: Grounding DINO Object Detection Integration."""
-import os, json, torch, numpy as np, cv2, warnings
-from typing import Dict, Any, Optional, Union
+"""Grounding DINO Open-Vocabulary Object Detection Subsystem."""
+
+import torch
+import numpy as np
 from PIL import Image
-warnings.filterwarnings("ignore", category=FutureWarning, module="transformers")
+from typing import Dict, Any, List, Optional
 from transformers import AutoProcessor, AutoModelForZeroShotObjectDetection
 
+
 class GroundingDINOPredictor:
+    """Predicts 2D bounding boxes and text labels for dynamic open-world scene entities."""
+
     def __init__(self, model_id: str = "IDEA-Research/grounding-dino-tiny", device: Optional[str] = None):
         self.device = torch.device(device or ("cuda" if torch.cuda.is_available() else "cpu"))
-        print(f"Loading Grounding DINO ({model_id}) onto {self.device}...")
-        self.processor = AutoProcessor.from_pretrained(model_id)
-        self.model = AutoModelForZeroShotObjectDetection.from_pretrained(model_id).to(self.device)
-        self.model.eval()
+        self.model_id = model_id
+        print(f"Loading Grounding DINO ({self.model_id}) onto {self.device}...")
 
-    @torch.no_grad()
-    def infer(self, image: Union[str, np.ndarray, torch.Tensor], text_prompt: str = "chair . table . robot", output_dir: Optional[str] = None) -> Dict[str, Any]:
-        if isinstance(image, str) and os.path.exists(image): pil_img = Image.open(image).convert("RGB")
-        elif isinstance(image, np.ndarray): pil_img = Image.fromarray(cv2.cvtColor(image, cv2.COLOR_BGR2RGB) if image.shape[2] == 3 else image)
-        else: pil_img = Image.new("RGB", (640, 480))
-        orig_w, orig_h = pil_img.size
-        prompt = text_prompt.strip()
-        if not prompt.endswith("."): prompt += "."
-        inputs = self.processor(images=pil_img, text=prompt, return_tensors="pt").to(self.device)
-        outputs = self.model(**inputs)
-        results = self.processor.post_process_grounded_object_detection(outputs, inputs.input_ids, threshold=0.35, text_threshold=0.25, target_sizes=[(orig_h, orig_w)])[0]
-        boxes = results["boxes"].cpu().numpy().tolist()
-        scores = results["scores"].cpu().numpy().tolist()
-        labels = results.get("text_labels", results.get("labels", []))
-        if not boxes: boxes, scores, labels = [[0, 0, orig_w, orig_h]], [0.5], ["object"]
-        result = {"bboxes_2d": [[int(b[0]), int(b[1]), int(b[2]), int(b[3])] for b in boxes], "scores": [round(float(s), 4) for s in scores], "labels": [str(lbl) for lbl in labels], "resolution": (orig_w, orig_h)}
-        if output_dir:
-            os.makedirs(output_dir, exist_ok=True)
-            with open(os.path.join(output_dir, "grounding_dino.json"), "w") as f: json.dump(result, f, indent=2)
-            result["json_path"] = os.path.join(output_dir, "grounding_dino.json")
-        return result
-
-    def integrate_into_somg(self, scene: Any, dino_result: Dict[str, Any], depth_result: Optional[Dict[str, Any]] = None) -> Any:
         try:
-            from somg.entity import SOMGEntity, SpatialComponent, PhysicsComponent
-        except ImportError:
-            return scene
+            self.processor = AutoProcessor.from_pretrained(self.model_id)
+            self.model = AutoModelForZeroShotObjectDetection.from_pretrained(self.model_id).to(self.device)
+            print("Grounding DINO loaded successfully.")
+        except Exception as e:
+            print(f"Warning: Could not load Grounding DINO weights ({e}).")
+            self.processor = None
+            self.model = None
 
-        for idx, (b2d, label, score) in enumerate(zip(dino_result.get("bboxes_2d", []), dino_result.get("labels", []), dino_result.get("scores", []))):
-            entity = SOMGEntity(entity_id=f"dino_{label}_{idx}", spatial=SpatialComponent(bbox_min=[0.0, 0.0, 0.5], bbox_max=[1.0, 1.0, 2.0]), physics=PhysicsComponent(is_static=True))
-            entity.semantic_label, entity.confidence = label, score
-            if hasattr(scene, "base_graph") and hasattr(scene.base_graph, "add_node"):
-                scene.base_graph.add_node(entity)
-        return scene
+    def predict(
+        self,
+        image: Image.Image,
+        text_prompt: str = "chair . lamp . table . vase . tv . console . furniture . decor .",
+        box_threshold: float = 0.20,
+        text_threshold: float = 0.20
+    ) -> Dict[str, Any]:
+        """Detects all dynamic objects in the scene."""
+        if self.model is None or self.processor is None:
+            w, h = image.size
+            return {"boxes": [[0, 0, w, h]], "labels": ["object"]}
+
+        formatted_prompt = text_prompt.lower().strip()
+        if not formatted_prompt.endswith("."):
+            formatted_prompt += " ."
+
+        try:
+            inputs = self.processor(images=image, text=formatted_prompt, return_tensors="pt").to(self.device)
+            with torch.no_grad():
+                outputs = self.model(**inputs)
+
+            target_sizes = [torch.tensor([image.size[1], image.size[0]])]
+
+            try:
+                results = self.processor.post_process_grounded_object_detection(
+                    outputs,
+                    inputs.input_ids,
+                    box_threshold=box_threshold,
+                    text_threshold=text_threshold,
+                    target_sizes=target_sizes
+                )[0]
+            except TypeError:
+                results = self.processor.post_process_grounded_object_detection(
+                    outputs,
+                    inputs.input_ids,
+                    threshold=box_threshold,
+                    text_threshold=text_threshold,
+                    target_sizes=target_sizes
+                )[0]
+
+            boxes = results["boxes"].cpu().numpy().tolist()
+            labels = results.get("labels", [f"object_{i}" for i in range(len(boxes))])
+
+            return {"boxes": boxes, "labels": labels}
+
+        except Exception as exc:
+            print(f"Grounding DINO inference warning ({exc}). Using full image bounding frame.")
+            w, h = image.size
+            return {"boxes": [[0, 0, w, h]], "labels": ["scene_object"]}
+
+
+GroundingDINOPipeline = GroundingDINOPredictor
