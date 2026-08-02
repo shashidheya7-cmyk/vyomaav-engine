@@ -202,5 +202,119 @@
         }
       }
     }
+  },
+  {
+    "timestamp": "2026-08-02T06:30:22.495752",
+    "git_branch": "phase2-ai-integration",
+    "git_commit": "8d847a8",
+    "experiment": "12_view_orbit_enriched_benchmark",
+    "environment": {
+      "pytorch_version": "2.11.0+cu130",
+      "cuda_version": "13.0",
+      "gpu_model": "NVIDIA RTX PRO 6000 Blackwell Server Edition"
+    },
+    "config": {
+      "num_views": 12,
+      "resolution": "640x480",
+      "depth_model": "DepthAnythingV2",
+      "completion_backend": "TRELLIS_Structural_Wrapper"
+    },
+    "metrics": {
+      "abs_rel_error": 0.019994603469967842,
+      "rmse": 0.038173478096723557,
+      "chamfer_distance": 0.03134409593814155,
+      "hausdorff_distance": 0.30011755063717593,
+      "f_score": 0.7567808345252993,
+      "normal_consistency": 0.9873678370445359,
+      "volumetric_iou": 0.5637389914651977
+    },
+    "performance": {
+      "total_latency_sec": 4.3861,
+      "cpu_ram_rss_mb": 1439.1,
+      "stages": {
+        "1_Camera_Trajectory_Generation": {
+          "duration_sec": 0.0012,
+          "percentage": 0.03,
+          "peak_vram_mb": 0.0
+        },
+        "2_Angle_Weighted_TSDF_Integration": {
+          "duration_sec": 1.9017,
+          "percentage": 43.36,
+          "peak_vram_mb": 745.92
+        },
+        "3_Marching_Cubes_Extraction": {
+          "duration_sec": 0.1097,
+          "percentage": 2.5,
+          "peak_vram_mb": 383.52
+        },
+        "4_TRELLIS_Neural_Completion": {
+          "duration_sec": 0.2323,
+          "percentage": 5.3,
+          "peak_vram_mb": 383.52
+        },
+        "5_Quantitative_Benchmark_Evaluation": {
+          "duration_sec": 2.1412,
+          "percentage": 48.82,
+          "peak_vram_mb": 383.52
+        }
+      }
+    }
+  },
+  {
+    "timestamp": "2026-08-02T06:32:01.019222",
+    "git_branch": "phase2-ai-integration",
+    "git_commit": "8d847a8",
+    "experiment": "12_view_orbit_enriched_benchmark",
+    "environment": {
+      "pytorch_version": "2.11.0+cu130",
+      "cuda_version": "13.0",
+      "gpu_model": "NVIDIA RTX PRO 6000 Blackwell Server Edition"
+    },
+    "config": {
+      "num_views": 12,
+      "resolution": "640x480",
+      "depth_model": "DepthAnythingV2",
+      "completion_backend": "TRELLIS_Structural_Wrapper"
+    },
+    "metrics": {
+      "abs_rel_error": 0.019978363066911697,
+      "rmse": 0.03816265985369682,
+      "chamfer_distance": 0.03196339569342554,
+      "hausdorff_distance": 0.3003916268539618,
+      "f_score": 0.7528143738480542,
+      "normal_consistency": 0.9864358079792348,
+      "volumetric_iou": 0.5635473673476324
+    },
+    "performance": {
+      "total_latency_sec": 4.4556,
+      "cpu_ram_rss_mb": 1515.95,
+      "stages": {
+        "1_Camera_Trajectory_Generation": {
+          "duration_sec": 0.0009,
+          "percentage": 0.02,
+          "peak_vram_mb": 0.0
+        },
+        "2_Angle_Weighted_TSDF_Integration": {
+          "duration_sec": 1.9382,
+          "percentage": 43.5,
+          "peak_vram_mb": 745.92
+        },
+        "3_Marching_Cubes_Extraction": {
+          "duration_sec": 0.1174,
+          "percentage": 2.63,
+          "peak_vram_mb": 383.52
+        },
+        "4_TRELLIS_Neural_Completion": {
+          "duration_sec": 0.2332,
+          "percentage": 5.23,
+          "peak_vram_mb": 383.52
+        },
+        "5_Quantitative_Benchmark_Evaluation": {
+          "duration_sec": 2.1659,
+          "percentage": 48.61,
+          "peak_vram_mb": 383.52
+        }
+      }
+    }
   }
 ]
